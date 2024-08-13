@@ -1,0 +1,22 @@
+{% extends "xtwitters/base.html" %}
+{% load bootstrap5 %}
+
+{% block header %}
+    <h2 class="mt-5 mb-4">Crie uma conta. É simples e rápido.</h2>
+{% endblock header %}
+
+{% block content %}
+    {% if form.errors %}
+        <p class="register-error" style="color: red;">- A senha pode conter letras, números, caracteres especiais e não pode conter o nome de usuário.</p>
+        <p class="register-error" style="color: red;">- As senhas digitadas precisam ser iguais.</p>
+        <p class="register-error" style="color: red;">- Se não for possível registrar o seu usuário, mesmo seguindo os passos acima, tente um nome de usuário diferente.</p>
+    {% endif %}
+    
+    <form action="{% url 'register' %}" method='post' class="form ul-none"> 
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        <button class="btn btn-primary" type="submit">Registrar</button>
+    </form>
+
+{% endblock content %}
