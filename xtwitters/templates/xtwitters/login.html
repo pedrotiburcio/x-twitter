@@ -1,0 +1,24 @@
+{% extends "xtwitters/base.html" %}
+{% load bootstrap5 %}
+
+{% block header %}
+    <h2 class="mt-5 mb-4">Entre com a sua conta.</h2>
+{% endblock header %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>Seu login e senha estão incorretos. Por favor, tente novamente.</p>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method='post' class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Entrar</button>
+        {% endbuttons %}
+        <input type="hidden" name="next" value="{% url 'tweets' %}" />
+    </form>
+
+{% endblock content %}

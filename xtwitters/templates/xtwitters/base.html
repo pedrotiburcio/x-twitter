@@ -1,5 +1,84 @@
-<a href="{% url 'index' %}"><h1>XTwitter</h1></a>
+{% load bootstrap5 %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Aplicação para troca de mensagens." />
+        <meta name="keywords" content="rede social, troca de mensagens" />
+        <meta name="author" content="Pedro Tibúrcio" />
 
-{% endblock content %}
+        <title>XTwitter</title>
+
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        
+        <style>
+            .ul-none ul{
+                display: none;
+            }
+
+            .form-text{
+                display: none;
+            }
+
+            form {
+                max-width: 400px; 
+                width: 100%;
+            }
+
+            .tweet-form {
+                max-width: 100%;
+            }
+
+            .card-header {
+                background-color: #0984e3; 
+                color: #fff;
+            }
+        </style>
+        
+        <script src="https://kit.fontawesome.com/21d9e8ca06.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top pt-3 pb-3">
+            <div class="container">
+                <div class="navbar-header">
+                    {% if user.is_authenticated %}
+                        <a class="navbar-brand">XTwitter</a>
+                    {% else %}
+                        <a class="navbar-brand" href="{% url 'index' %}">XTwitter</a>
+                    {% endif%}
+                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar" aria-expanded="false">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div> 
+                <div id="navbar" class="collapse navbar-collapse">
+                    {% if user.is_authenticated %}
+                        <ul class="nav navbar-nav">
+                            <li><a class="nav-link" href="{% url 'tweets' %}">Tweets</a></li>
+                        </ul>
+                    {% endif%} 
+                    <ul class="nav navbar-nav ms-auto">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link fw-bold">Olá, {{ user.username }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Sair</a></li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Entrar</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrar</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div>
+                {% block header %}{% endblock header %}
+            </div>
+            <div>
+                {% block content %}{% endblock content %}
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+{% extends "xtwitters/base.html" %}
+{% load bootstrap5 %}
+
+{% block header %}
+<h2 class="mt-4 mb-3">Deletar Tweet:</h2>
+{% endblock header %}
+
+{% block content %}
+        <p><b>Tem certeza</b> que deseja que excluir o tweet abaixo?</p>
+        <div class="card mt-4 mb-4">
+                <p class="card-header">
+                        @{{ tweet.author }}
+                </p>
+                <div class="card-body">
+                        <h5>
+                                {{ tweet.text | linebreaks }}
+                        </h5>
+                        <p class="card-text">
+                                Publicado em {{ tweet.date_added | date:'d/m/Y - H:i'}}
+                        </p>
+                </div> 
+        </div>
+        <form action="{% url 'delete_tweet' tweet.id %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-danger btn-sm me-1" type="submit">Excluir</button>
+                {% if 'my_tweets' in previous_page %}
+                        <a class="btn btn-primary btn-sm me-1" href="{% url 'my_tweets' %}">Cancelar</a>
+                {% else %}
+                        <a class="btn btn-primary btn-sm me-1" href="{% url 'tweets' %}">Cancelar</a>
+                {% endif %}
+        </form>
+{% endblock content %}

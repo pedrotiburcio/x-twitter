@@ -1,0 +1,46 @@
+{% extends "xtwitters/base.html" %}
+
+{% block header %}
+<h1 class="mt-4 mb-5">Tweets</h1>
+{% endblock header %}
+
+
+{% block content %}
+    <a class="btn btn-primary mb-5 me-1" href="{% url 'new_tweet' %}">Adicionar Tweet</a>
+    <a class="btn btn-secondary mb-5" href="{% url 'my_tweets' %}">Meus Tweets</a>
+    <ul class="ps-0">
+        {% for tweet in tweets %}
+            <li class="card mb-5">
+                <p class="card-header">
+                    @{{ tweet.author }}
+                </p>
+                <div class="card-body">
+                    <h5>
+                        {{ tweet.text | linebreaks }}
+                    </h5>
+                    <p class="card-text">
+                        Publicado em {{ tweet.date_added | date:'d/m/Y - H:i'}}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    {% if user in tweet.likes.all %} 
+                        <a href="{% url 'like_tweet' tweet.id %}" style="text-decoration: none">
+                            <i class="fa-solid fa-heart" style="color:red"></i>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'like_tweet' tweet.id %}" style="text-decoration: none">
+                            <i class="fa fa-heart-o" style="color:red"></i>
+                        </a>
+                    {% endif %}
+                    {{ tweet.number_of_likes }} curtida(s)
+                    {% if tweet.author.id == user.id %}
+                        <a class="btn btn-primary btn-sm ms-3 me-1" href="{% url 'edit_tweet' tweet.id %}">Editar</a>
+                        <a class="btn btn-danger btn-sm" href="{% url 'delete_tweet' tweet.id %}">Excluir</a>
+                    {% endif %} 
+                </div>
+            </li>
+        {% empty %}
+            <li>Não há tweets adicionados.</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

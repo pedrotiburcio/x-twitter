@@ -1,0 +1,20 @@
+{% extends "xtwitters/base.html" %}
+{% load bootstrap5 %}
+
+{% block header %}
+<h2 class="mt-4 mb-4">Editar Tweet:</h2>
+{% endblock header %}
+
+{% block content %}
+    <form action="{% url 'edit_tweet' tweet.id %}" method='post' class="form tweet-form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        
+        <button type="submit" class="btn btn-primary btn-sm me-1 mt-2">Adicionar</button>
+        {% if 'my_tweets' in previous_page %}
+        <a class="btn btn-danger btn-sm me-1 mt-2" href="{% url 'my_tweets' %}">Cancelar</a>
+        {% else %}
+        <a class="btn btn-danger btn-sm me-1 mt-2" href="{% url 'tweets' %}">Cancelar</a>
+        {% endif %}
+    </form>
+{% endblock content %}

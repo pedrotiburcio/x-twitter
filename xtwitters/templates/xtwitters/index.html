@@ -1,5 +1,11 @@
 {% extends "xtwitters/base.html" %}
 
+{% block header %}
+    <div>
+        <h1 class="mt-5 mb-4">Bem-vindo ao XTwitter.</h1>
+    </div>
+{% endblock header %}
+
 {% block content %}
-    <p>Essa aplicação te permitirá postar e interagir com outras pessoas. </p>
+<p><a href="{% url 'register' %}">Crie uma conta</a> ou  <a href="{% url 'login' %}">faça o login</a> para utilizar nossa rede e interagir com outras pessoas.</p>
 {% endblock content %}
